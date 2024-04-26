@@ -102,7 +102,16 @@ Vertexes* runBellmanFordAlgorithm(int edgeValues[MAX_VERTEX_COUNT][MAX_VERTEX_CO
 					vertexes->items[neighborVertexIndex].prevIndex = baseVertexIndex;
 				}
 			}
+		}
+	}
 
+	for (baseVertexIndex = 0, neighborVertexIndex = ~0; distanceAddon = getEdge(edgeValues, vertexCount, &baseVertexIndex, &neighborVertexIndex), distanceAddon != NE;) {
+		if (vertexes->items[baseVertexIndex].value != INFINITY) {
+			tryNewDistance = vertexes->items[baseVertexIndex].value + distanceAddon;
+			if (tryNewDistance < vertexes->items[neighborVertexIndex].value) {
+				printf("Error: the graph contains a negative weight cycle.\r\n");
+				return NULL;
+			}
 		}
 	}
 
